@@ -1,138 +1,72 @@
 # TransitOps
 
-> Fleet management, trip lifecycle, and driver operations platform built on **Odoo 17**.
+Fleet management, trip lifecycle, and driver operations — built on **Odoo 17**.
 
-TransitOps is a custom Odoo module that provides end-to-end transit operations management —
-from vehicle registry and driver licensing to trip dispatch, cargo validation, maintenance tracking,
-and real-time KPI dashboards with ROI calculations.
+We built TransitOps to handle the day-to-day headaches of running a transit fleet: tracking which vehicles are where, knowing when a driver's license is about to expire, and figuring out if a truck is actually making money or just burning fuel.
 
-## Features
+## What You Get
 
-### Core
-- **Vehicle Registry** — Track fleet status (Available / On Trip / In Shop), acquisition costs, and odometer readings
-- **Driver Management** — License tracking with automatic expiry detection (valid / expiring soon / expired)
-- **Trip Lifecycle** — Full state machine: Draft → Dispatched → In Transit → Completed / Cancelled
-- **Maintenance Logs** — Preventive, corrective, and emergency maintenance with cost tracking
+**Vehicle Management** — See your whole fleet at a glance. Know which trucks are on the road, which are in the shop, and how much each one has cost you versus what it's brought in.
 
-### Business Logic
-- **Automated Status Transitions** — Dispatching a trip automatically sets vehicle and driver to "On Trip"; completing it reverts both to "Available"
-- **Cargo Weight Validation** — Prevents dispatching if cargo exceeds the vehicle's maximum load capacity
-- **License Expiry Checks** — Blocks trip assignment to drivers with expired licenses
-- **Vehicle ROI Calculation** — `(Revenue - (Maintenance + Fuel)) / Acquisition Cost` computed in real time
+**Driver Profiles** — Every driver's license is tracked with automatic expiry warnings. No more finding out a license expired after assigning a trip.
 
-### Analytics & Dashboard
-- **Fleet Utilization** — Pie chart showing Available vs. On Trip vs. In Shop vehicles
-- **Trip Revenue** — Bar chart comparing revenue across vehicles and destinations
-- **Fuel Efficiency** — Distance vs. fuel consumption analysis
-- **Pivot Tables** — Multi-dimensional analysis by vehicle, driver, status, and time period
+**Trip Lifecycle** — Draft a trip, dispatch it, track it in transit, and mark it done. The system automatically updates vehicle and driver availability as trips progress. Try to assign too much cargo or a driver with an expired license? The system won't let you.
 
-### Bonus
-- **PDF Trip Reports** — QWeb-templated printable reports with trip details, cargo, and financials
-- **Automated License Alerts** — Cron job sends email notifications for licenses expiring within 30 days
-- **Role-Based Access Control** — Fleet Manager, Driver, and Financial Analyst roles with scoped permissions
-- **Demo Data** — Pre-loaded vehicles, drivers, and trips for immediate dashboard visibility
+**Maintenance Logs** — When a truck goes in for service, it gets marked as "In Shop" automatically. Once maintenance is complete and there's nothing else pending, it goes back to available.
 
-## Tech Stack
+**ROI Dashboard** — Built-in analytics show fleet utilization (pie chart), revenue by vehicle (bar chart), fuel efficiency, and cost breakdowns in pivot tables. The ROI formula: `(Revenue - Maintenance - Fuel) / Acquisition Cost`.
 
-| Layer | Technology |
-|-------|------------|
-| Framework | Odoo 17 (Community Edition) |
-| Language | Python 3 |
-| Database | PostgreSQL 15 |
-| Containerization | Docker + Docker Compose |
-| Deployment | Render.com (Blueprints) |
-| Version Control | GitHub |
+**License Expiry Alerts** — A daily cron job checks for licenses expiring within 30 days and emails the fleet manager. Expired licenses get flagged too.
 
-## Project Structure
+**PDF Reports** — Print trip reports with cargo details, financials, and route info.
 
-```
-odoo-transitops/
-├── addons/
-│   └── transit_ops/
-│       ├── models/
-│       │   ├── vehicle.py          # Vehicle registry and ROI logic
-│       │   ├── driver.py           # Driver profiles and license validation
-│       │   ├── trip.py             # Trip lifecycle and cargo constraints
-│       │   └── maintenance.py      # Maintenance logs and status triggers
-│       ├── views/                  # XML views (Kanban, Form, List, Graph, Pivot)
-│       ├── security/               # RBAC groups and access control lists
-│       ├── data/                   # Cron jobs for automated checks
-│       ├── reports/                # QWeb PDF templates
-│       └── demo/                   # Demo data for immediate testing
-├── config/
-│   └── odoo.conf                   # Odoo server configuration
-├── Dockerfile                      # Odoo 17 image + custom addons
-├── docker-compose.yml              # Odoo + PostgreSQL stack
-├── render.yaml                     # Render.com deployment blueprint
-└── README.md
-```
+**Role-Based Access** — Fleet Managers get full control. Drivers see what they need. Financial Analysts get the dashboards and read access to everything.
 
-## Getting Started
+## Quick Start
 
 ### Prerequisites
-- Docker and Docker Compose installed
-- GitHub account (for deployment)
+- Docker + Docker Compose
 
-### Local Development
+### Run Locally
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/odoo-transitops.git
-   cd odoo-transitops
-   ```
+```bash
+git clone https://github.com/DunkelBit/odoo-transitops.git
+cd odoo-transitops
+docker compose up -d
+```
 
-2. **Start the stack**
-   ```bash
-   docker compose up -d
-   ```
+Open `http://localhost:8069`, create a database, then install the TransitOps app from the Apps menu.
 
-3. **Access Odoo** at `http://localhost:8069`
-   - Create a new database
-   - Go to **Apps** → search for **TransitOps** → Install
+### Deploy to Render
 
-4. **Load demo data** (optional)
-   - The module includes demo vehicles, drivers, and trips
-   - Enable **Developer Mode** → Apps → check **Load demo data** before installing
-
-### Deploy to Render.com
-
-1. Push this repository to GitHub
-2. Connect your GitHub repo to Render.com
-3. Render detects `render.yaml` and provisions:
-   - A **PostgreSQL** database
-   - A **Docker web service** running Odoo
-4. Access your live instance at `https://your-app.onrender.com`
+Connect your GitHub repo to [Render.com](https://render.com) — the `render.yaml` blueprint handles the rest (Odoo web service + PostgreSQL database).
 
 ## Configuration
 
-### Fuel Price
-The fuel cost per litre used in ROI calculations is stored as an Odoo system parameter:
+**Fuel price** used for ROI calculations is a system parameter you can change under Settings > Technical > Parameters. Look for `transitops.fuel_price_per_litre` (defaults to 1.50).
 
-| Key | Default | Description |
-|-----|---------|-------------|
-| `transitops.fuel_price_per_litre` | `1.50` | Configurable via **Settings → Technical → Parameters** |
+## Tech
 
-### Environment Variables (Render)
+| What | With What |
+|------|-----------|
+| Backend & UI | Odoo 17 Community |
+| Language | Python 3 |
+| Database | PostgreSQL 15 |
+| Containers | Docker + Docker Compose |
+| Hosting | Render.com (Blueprints) |
 
-| Variable | Source | Description |
-|----------|--------|-------------|
-| `HOST` | Database | PostgreSQL host (auto-linked) |
-| `USER` | Database | PostgreSQL user (auto-linked) |
-| `PASSWORD` | Database | PostgreSQL password (auto-linked) |
-| `ODOO_ADMIN_PASSWD` | Manual | Master database password |
+## Roles
 
-## Roles & Permissions
-
-| Role | Vehicles | Drivers | Trips | Dashboard | Reports |
-|------|:--------:|:-------:|:-----:|:---------:|:-------:|
-| Fleet Manager | Full CRUD | Full CRUD | Full CRUD | Full | Full |
-| Driver | Read | Read (self) | Read/Write (own) | — | — |
-| Financial Analyst | Read | Read | Read | Full | Full |
+| Role | Vehicles | Drivers | Trips | Reports |
+|------|----------|---------|-------|---------|
+| Fleet Manager | Everything | Everything | Everything | Everything |
+| Driver | View | View (own) | Read/Write (own) | No |
+| Financial Analyst | View | View | View | Everything |
 
 ## License
 
 MIT
 
-## Built For
+---
 
-Odoo Hackathon 2026 — Exceeding expectations in 8 hours.
+Built for Odoo Hackathon 2026.

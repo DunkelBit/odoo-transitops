@@ -3,17 +3,16 @@
     "version": "17.0.1.0.0",
     "summary": "Fleet management, trip lifecycle, and driver operations",
     "description": """
-        TransitOps — End-to-end transit operations management.
+        TransitOps — Manage your fleet, drivers, trips and maintenance in one place.
 
-        Features:
-        - Vehicle registry with status tracking and ROI calculation
-        - Driver profiles with license expiry validation
-        - Trip lifecycle: Draft → Dispatched → In Transit → Completed
-        - Maintenance logs with cost tracking
-        - Automated status transitions and business validations
-        - Fleet dashboard with pivot tables and graphs
-        - PDF trip reports
-        - Role-based access control
+        What it does:
+        - Track vehicles (trucks, vans, trailers) with status and cost info
+        - Manage drivers with automatic license expiry tracking
+        - Full trip lifecycle from draft to completion with cargo checks
+        - Maintenance logging that updates vehicle availability
+        - ROI calculations per vehicle (revenue vs costs)
+        - Dashboard with charts and pivot tables for analytics
+        - PDF trip reports and automated license expiry email alerts
     """,
     "author": "TransitOps Team",
     "category": "Fleet",
