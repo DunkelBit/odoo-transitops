@@ -5,7 +5,6 @@ services:
     plan: free
     port: 8069
     healthCheckPath: /web/health
-    dockerCommand: /bin/sh -c "odoo --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASS --db_name=$DB_NAME -i base --stop-after-init --no-http && odoo --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASS --db_name=$DB_NAME"
     envVars:
       - key: DB_HOST
         fromDatabase:
