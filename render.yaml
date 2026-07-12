@@ -1,35 +1,35 @@
 services:
   - type: web
-    name: transitops
+    name: transitops-app
     runtime: docker
     plan: free
     port: 8069
     healthCheckPath: /web/health
-    dockerCommand: /bin/sh -c "odoo -d $DB_NAME -i base --stop-after-init --no-http --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASS && odoo --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASS"
+    dockerCommand: /bin/sh -c "odoo --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASS --db_name=$DB_NAME -i base --stop-after-init --no-http && odoo --db_host=$DB_HOST --db_port=$DB_PORT --db_user=$DB_USER --db_password=$DB_PASS --db_name=$DB_NAME"
     envVars:
       - key: DB_HOST
         fromDatabase:
-          name: transitops-db
+          name: transitops-db-fresh
           property: host
       - key: DB_PORT
         fromDatabase:
-          name: transitops-db
+          name: transitops-db-fresh
           property: port
       - key: DB_USER
         fromDatabase:
-          name: transitops-db
+          name: transitops-db-fresh
           property: user
       - key: DB_PASS
         fromDatabase:
-          name: transitops-db
+          name: transitops-db-fresh
           property: password
       - key: DB_NAME
         fromDatabase:
-          name: transitops-db
+          name: transitops-db-fresh
           property: database
       - key: ODOO_ADMIN_PASSWD
         generateValue: true
 
 databases:
-  - name: transitops-db
+  - name: transitops-db-fresh
     plan: free
