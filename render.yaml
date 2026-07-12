@@ -9,6 +9,10 @@ services:
         fromDatabase:
           name: transitops-db
           property: host
+      - key: PORT
+        fromDatabase:
+          name: transitops-db
+          property: port
       - key: USER
         fromDatabase:
           name: transitops-db
