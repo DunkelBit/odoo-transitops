@@ -4,6 +4,7 @@ services:
     runtime: docker
     plan: free
     healthCheckPath: /web/health
+    dockerCommand: /bin/sh -c "odoo -d transitops -i base --stop-after-init --no-http && odoo"
     envVars:
       - key: HOST
         fromDatabase:
@@ -22,13 +23,9 @@ services:
           name: transitops-db
           property: password
       - key: DB_NAME
-        fromDatabase:
-          name: transitops-db
-          property: database
+        value: transitops
       - key: ODOO_ADMIN_PASSWD
         generateValue: true
-      - key: DISABLE_DBFILTER
-        value: "1"
 
 databases:
   - name: transitops-db
