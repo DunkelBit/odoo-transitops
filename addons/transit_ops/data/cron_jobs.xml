@@ -23,4 +23,16 @@
         <field name="key">transitops.fuel_price_per_litre</field>
         <field name="value">1.50</field>
     </record>
+
+    <!-- Cron Job: Daily License Expiry Check -->
+    <record id="cron_check_license_expiry" model="ir.cron">
+        <field name="name">TransitOps: Check License Expiry</field>
+        <field name="model_id" ref="model_transitops_driver"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_license_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
 </odoo>

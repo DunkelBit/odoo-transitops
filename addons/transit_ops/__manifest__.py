@@ -20,6 +20,7 @@
     "license": "MIT",
     "depends": [
         "base",
+        "mail",
     ],
     "data": [
         "security/security.xml",

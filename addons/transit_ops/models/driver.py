@@ -91,3 +91,50 @@ class Driver(models.Model):
             "domain": [("driver_id", "=", self.id)],
             "context": {"default_driver_id": self.id},
         }
+
+    @api.model
+    def _cron_check_license_expiry(self):
+        today = date.today()
+        threshold = today + timedelta(days=30)
+        expiring = self.search([
+            ("license_expiry", ">=", today),
+            ("license_expiry", "<=", threshold),
+        ])
+        expired = self.search([
+            ("license_expiry", "<", today),
+        ])
+        fleet_managers = self.env.ref("transitops.group_fleet_manager").users
+        if not fleet_managers:
+            return
+        for driver in expiring:
+            days_left = (driver.license_expiry - today).days
+            subject = f"License Expiring Soon: {driver.name}"
+            body = (
+                f"<p>Driver <strong>{driver.name}</strong> "
+                f"(License: {driver.license_number}) has a license expiring "
+                f"in <strong>{days_left} day(s)</strong> "
+                f"on <strong>{driver.license_expiry.strftime('%B %d, %Y')}</strong>.</p>"
+                f"<p>Please arrange renewal before expiry.</p>"
+            )
+            for manager in fleet_managers:
+                self.env["mail.mail"].create({
+                    "subject": subject,
+                    "body_html": body,
+                    "email_to": manager.email,
+                    "auto_delete": True,
+                }).send()
+        for driver in expired:
+            subject = f"License Expired: {driver.name}"
+            body = (
+                f"<p>Driver <strong>{driver.name}</strong> "
+                f"(License: {driver.license_number}) has an <strong>expired</strong> license "
+                f"(expired on <strong>{driver.license_expiry.strftime('%B %d, %Y')}</strong>).</p>"
+                f"<p>This driver should not be assigned to any trips until the license is renewed.</p>"
+            )
+            for manager in fleet_managers:
+                self.env["mail.mail"].create({
+                    "subject": subject,
+                    "body_html": body,
+                    "email_to": manager.email,
+                    "auto_delete": True,
+                }).send()
