@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sequence for Trip Reference -->
+    <record id="seq_transitops_trip" model="ir.sequence">
+        <field name="name">TransitOps Trip</field>
+        <field name="code">transitops.trip</field>
+        <field name="prefix">TRIP-</field>
+        <field name="padding">4</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Sequence for Maintenance Reference -->
+    <record id="seq_transitops_maintenance" model="ir.sequence">
+        <field name="name">TransitOps Maintenance</field>
+        <field name="code">transitops.maintenance</field>
+        <field name="prefix">MAINT-</field>
+        <field name="padding">4</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- System Parameter: Fuel Price per Litre -->
+    <record id="config_fuel_price" model="ir.config_parameter">
+        <field name="key">transitops.fuel_price_per_litre</field>
+        <field name="value">1.50</field>
+    </record>
+</odoo>

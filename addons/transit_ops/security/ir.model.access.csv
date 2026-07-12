@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_transitops_vehicle_fleet_manager,transitops.vehicle.fleet.manager,model_transitops_vehicle,group_fleet_manager,1,1,1,1
+access_transitops_vehicle_driver,transitops.vehicle.driver,model_transitops_vehicle,group_driver,1,0,0,0
+access_transitops_vehicle_financial,transitops.vehicle.financial,model_transitops_vehicle,group_financial_analyst,1,0,0,0
+
+access_transitops_driver_fleet_manager,transitops.driver.fleet.manager,model_transitops_driver,group_fleet_manager,1,1,1,1
+access_transitops_driver_driver,transitops.driver.driver,model_transitops_driver,group_driver,1,0,0,0
+access_transitops_driver_financial,transitops.driver.financial,model_transitops_driver,group_financial_analyst,1,0,0,0
+
+access_transitops_trip_fleet_manager,transitops.trip.fleet.manager,model_transitops_trip,group_fleet_manager,1,1,1,1
+access_transitops_trip_driver,transitops.trip.driver,model_transitops_trip,group_driver,1,1,0,0
+access_transitops_trip_financial,transitops.trip.financial,model_transitops_trip,group_financial_analyst,1,0,0,0
+
+access_transitops_maintenance_fleet_manager,transitops.maintenance.fleet.manager,model_transitops_maintenance,group_fleet_manager,1,1,1,1
+access_transitops_maintenance_driver,transitops.maintenance.driver,model_transitops_maintenance,group_driver,1,0,0,0
+access_transitops_maintenance_financial,transitops.maintenance.financial,model_transitops_maintenance,group_financial_analyst,1,0,0,0

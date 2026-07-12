@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Odoo
+*.pyc
+*.log
+odoo-data/
+postgres-data/
+
+# Docker
+.env
+
+# OS
+.DS_Store
+Thumbs.db

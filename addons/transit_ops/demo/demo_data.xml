@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Demo Vehicles -->
+        <record id="vehicle_1" model="transitops.vehicle">
+            <field name="name">TRK-001</field>
+            <field name="model_name">Volvo FH16</field>
+            <field name="vehicle_type">truck</field>
+            <field name="max_load_capacity">25.0</field>
+            <field name="fuel_capacity">400.0</field>
+            <field name="current_odometer">125000</field>
+            <field name="acquisition_cost">85000</field>
+        </record>
+
+        <record id="vehicle_2" model="transitops.vehicle">
+            <field name="name">TRK-002</field>
+            <field name="model_name">Scania R 450</field>
+            <field name="vehicle_type">truck</field>
+            <field name="max_load_capacity">22.0</field>
+            <field name="fuel_capacity">350.0</field>
+            <field name="current_odometer">98000</field>
+            <field name="acquisition_cost">78000</field>
+        </record>
+
+        <record id="vehicle_3" model="transitops.vehicle">
+            <field name="name">VAN-001</field>
+            <field name="model_name">Mercedes Sprinter</field>
+            <field name="vehicle_type">van</field>
+            <field name="max_load_capacity">3.5</field>
+            <field name="fuel_capacity">80.0</field>
+            <field name="current_odometer">45000</field>
+            <field name="acquisition_cost">35000</field>
+        </record>
+
+        <record id="vehicle_4" model="transitops.vehicle">
+            <field name="name">TRL-001</field>
+            <field name="model_name">Schmitz Cargobull</field>
+            <field name="vehicle_type">trailer</field>
+            <field name="max_load_capacity">30.0</field>
+            <field name="fuel_capacity">0</field>
+            <field name="current_odometer">200000</field>
+            <field name="acquisition_cost">42000</field>
+        </record>
+
+        <record id="vehicle_5" model="transitops.vehicle">
+            <field name="name">TRK-003</field>
+            <field name="model_name">MAN TGX</field>
+            <field name="vehicle_type">truck</field>
+            <field name="max_load_capacity">20.0</field>
+            <field name="fuel_capacity">380.0</field>
+            <field name="current_odometer">150000</field>
+            <field name="acquisition_cost">72000</field>
+        </record>
+
+        <!-- Demo Drivers -->
+        <record id="driver_1" model="transitops.driver">
+            <field name="name">John Smith</field>
+            <field name="license_number">DL-2024-001</field>
+            <field name="license_expiry" eval="(DateTime.today() + relativedelta(months=18)).strftime('%Y-%m-%d')"/>
+            <field name="phone">+1-555-0101</field>
+        </record>
+
+        <record id="driver_2" model="transitops.driver">
+            <field name="name">Maria Garcia</field>
+            <field name="license_number">DL-2024-002</field>
+            <field name="license_expiry" eval="(DateTime.today() + relativedelta(months=6)).strftime('%Y-%m-%d')"/>
+            <field name="phone">+1-555-0102</field>
+        </record>
+
+        <record id="driver_3" model="transitops.driver">
+            <field name="name">Ahmed Hassan</field>
+            <field name="license_number">DL-2024-003</field>
+            <field name="license_expiry" eval="(DateTime.today() + relativedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="phone">+1-555-0103</field>
+        </record>
+
+        <record id="driver_4" model="transitops.driver">
+            <field name="name">Sarah Johnson</field>
+            <field name="license_number">DL-2024-004</field>
+            <field name="license_expiry" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+            <field name="phone">+1-555-0104</field>
+        </record>
+
+        <record id="driver_5" model="transitops.driver">
+            <field name="name">Carlos Rodriguez</field>
+            <field name="license_number">DL-2024-005</field>
+            <field name="license_expiry" eval="(DateTime.today() + relativedelta(months=24)).strftime('%Y-%m-%d')"/>
+            <field name="phone">+1-555-0105</field>
+        </record>
+
+        <!-- Demo Trips -->
+        <record id="trip_1" model="transitops.trip">
+            <field name="vehicle_id" ref="vehicle_1"/>
+            <field name="driver_id" ref="driver_1"/>
+            <field name="origin">New York, NY</field>
+            <field name="destination">Boston, MA</field>
+            <field name="cargo_description">Electronics equipment</field>
+            <field name="cargo_weight">18.5</field>
+            <field name="distance_km">350</field>
+            <field name="fuel_consumed">85</field>
+            <field name="revenue">2500</field>
+            <field name="status">completed</field>
+        </record>
+
+        <record id="trip_2" model="transitops.trip">
+            <field name="vehicle_id" ref="vehicle_2"/>
+            <field name="driver_id" ref="driver_2"/>
+            <field name="origin">Chicago, IL</field>
+            <field name="destination">Detroit, MI</field>
+            <field name="cargo_description">Auto parts</field>
+            <field name="cargo_weight">15.0</field>
+            <field name="distance_km">280</field>
+            <field name="fuel_consumed">70</field>
+            <field name="revenue">1800</field>
+            <field name="status">completed</field>
+        </record>
+
+        <record id="trip_3" model="transitops.trip">
+            <field name="vehicle_id" ref="vehicle_1"/>
+            <field name="driver_id" ref="driver_3"/>
+            <field name="origin">Los Angeles, CA</field>
+            <field name="destination">Phoenix, AZ</field>
+            <field name="cargo_description">Consumer goods</field>
+            <field name="cargo_weight">20.0</field>
+            <field name="distance_km">600</field>
+            <field name="fuel_consumed">150</field>
+            <field name="revenue">4200</field>
+            <field name="status">completed</field>
+        </record>
+
+        <record id="trip_4" model="transitops.trip">
+            <field name="vehicle_id" ref="vehicle_3"/>
+            <field name="driver_id" ref="driver_5"/>
+            <field name="origin">Miami, FL</field>
+            <field name="destination">Orlando, FL</field>
+            <field name="cargo_description">Medical supplies</field>
+            <field name="cargo_weight">2.0</field>
+            <field name="distance_km">380</field>
+            <field name="fuel_consumed">45</field>
+            <field name="revenue">1200</field>
+            <field name="status">completed</field>
+        </record>
+
+        <record id="trip_5" model="transitops.trip">
+            <field name="vehicle_id" ref="vehicle_2"/>
+            <field name="driver_id" ref="driver_1"/>
+            <field name="origin">Seattle, WA</field>
+            <field name="destination">Portland, OR</field>
+            <field name="cargo_description">Furniture</field>
+            <field name="cargo_weight">12.0</field>
+            <field name="distance_km">280</field>
+            <field name="fuel_consumed">65</field>
+            <field name="revenue">1600</field>
+            <field name="status">completed</field>
+        </record>
+
+        <record id="trip_6" model="transitops.trip">
+            <field name="vehicle_id" ref="vehicle_4"/>
+            <field name="driver_id" ref="driver_2"/>
+            <field name="origin">Dallas, TX</field>
+            <field name="destination">Houston, TX</field>
+            <field name="cargo_description">Construction materials</field>
+            <field name="cargo_weight">28.0</field>
+            <field name="distance_km">400</field>
+            <field name="fuel_consumed">0</field>
+            <field name="revenue">3200</field>
+            <field name="status">completed</field>
+        </record>
+
+        <record id="trip_7" model="transitops.trip">
+            <field name="vehicle_id" ref="vehicle_5"/>
+            <field name="driver_id" ref="driver_5"/>
+            <field name="origin">Denver, CO</field>
+            <field name="destination">Salt Lake City, UT</field>
+            <field name="cargo_description">Food products</field>
+            <field name="cargo_weight">16.0</field>
+            <field name="distance_km">525</field>
+            <field name="fuel_consumed">120</field>
+            <field name="revenue">2800</field>
+            <field name="status">completed</field>
+        </record>
+
+        <record id="trip_8" model="transitops.trip">
+            <field name="vehicle_id" ref="vehicle_1"/>
+            <field name="driver_id" ref="driver_3"/>
+            <field name="origin">San Francisco, CA</field>
+            <field name="destination">Sacramento, CA</field>
+            <field name="cargo_description">Pharmaceuticals</field>
+            <field name="cargo_weight">10.0</field>
+            <field name="distance_km">140</field>
+            <field name="fuel_consumed">35</field>
+            <field name="revenue">1500</field>
+            <field name="status">completed</field>
+        </record>
+
+        <!-- Demo Maintenance Records -->
+        <record id="maintenance_1" model="transitops.maintenance">
+            <field name="vehicle_id" ref="vehicle_1"/>
+            <field name="maintenance_type">preventive</field>
+            <field name="description">Regular oil change and filter replacement</field>
+            <field name="cost">450</field>
+            <field name="date_start" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+            <field name="date_end" eval="(DateTime.today() - relativedelta(months=2) + relativedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="status">completed</field>
+        </record>
+
+        <record id="maintenance_2" model="transitops.maintenance">
+            <field name="vehicle_id" ref="vehicle_2"/>
+            <field name="maintenance_type">corrective</field>
+            <field name="description">Brake pad replacement</field>
+            <field name="cost">1200</field>
+            <field name="date_start" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+            <field name="date_end" eval="(DateTime.today() - relativedelta(months=1) + relativedelta(days=3)).strftime('%Y-%m-%d')"/>
+            <field name="status">completed</field>
+        </record>
+
+        <record id="maintenance_3" model="transitops.maintenance">
+            <field name="vehicle_id" ref="vehicle_5"/>
+            <field name="maintenance_type">emergency</field>
+            <field name="description">Engine overheating repair</field>
+            <field name="cost">3500</field>
+            <field name="date_start" eval="(DateTime.today() - relativedelta(weeks=3)).strftime('%Y-%m-%d')"/>
+            <field name="date_end" eval="(DateTime.today() - relativedelta(weeks=2)).strftime('%Y-%m-%d')"/>
+            <field name="status">completed</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="menu_transitops_root" name="TransitOps" sequence="100" web_icon="transit_ops,static/description/icon.png"/>
+
+    <!-- Fleet Management -->
+    <menuitem id="menu_fleet" name="Fleet" parent="menu_transitops_root" sequence="10"/>
+
+    <menuitem id="menu_vehicles" name="Vehicles" parent="menu_fleet" action="vehicle_action" sequence="10"/>
+    <menuitem id="menu_drivers" name="Drivers" parent="menu_fleet" action="driver_action" sequence="20"/>
+
+    <!-- Operations -->
+    <menuitem id="menu_operations" name="Operations" parent="menu_transitops_root" sequence="20"/>
+
+    <menuitem id="menu_trips" name="Trips" parent="menu_operations" action="trip_action" sequence="10"/>
+    <menuitem id="menu_maintenance" name="Maintenance" parent="menu_operations" action="maintenance_action" sequence="20"/>
+
+    <!-- Analytics -->
+    <menuitem id="menu_analytics" name="Analytics" parent="menu_transitops_root" sequence="30"/>
+
+    <menuitem id="menu_dashboard" name="Dashboard" parent="menu_analytics" action="dashboard_action" sequence="10"/>
+    <menuitem id="menu_trip_analytics" name="Trip Analytics" parent="menu_analytics" action="trip_analytics_action" sequence="20"/>
+    <menuitem id="menu_maintenance_analytics" name="Maintenance Analytics" parent="menu_analytics" action="maintenance_analytics_action" sequence="30"/>
+</odoo>

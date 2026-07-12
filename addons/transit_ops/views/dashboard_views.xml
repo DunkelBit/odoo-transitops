@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dashboard: Fleet Utilization Pie Chart -->
+    <record id="vehicle_status_graph_view" model="ir.ui.view">
+        <field name="name">transitops.vehicle.status.graph</field>
+        <field name="model">transitops.vehicle</field>
+        <field name="arch" type="xml">
+            <graph string="Fleet Utilization" type="pie" sample="1">
+                <field name="status"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Dashboard: Revenue by Vehicle Bar Chart -->
+    <record id="revenue_by_vehicle_graph_view" model="ir.ui.view">
+        <field name="name">transitops.revenue.vehicle.graph</field>
+        <field name="model">transitops.trip</field>
+        <field name="arch" type="xml">
+            <graph string="Revenue by Vehicle" type="bar" sample="1">
+                <field name="vehicle_id" type="col"/>
+                <field name="revenue" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Dashboard: Fuel Efficiency Graph -->
+    <record id="fuel_efficiency_graph_view" model="ir.ui.view">
+        <field name="name">transitops.fuel.efficiency.graph</field>
+        <field name="model">transitops.trip</field>
+        <field name="arch" type="xml">
+            <graph string="Fuel Efficiency (Distance vs Fuel)" type="bar" sample="1">
+                <field name="vehicle_id" type="col"/>
+                <field name="distance_km" type="measure"/>
+                <field name="fuel_consumed" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Dashboard: Trip Revenue Pivot -->
+    <record id="trip_revenue_pivot_view" model="ir.ui.view">
+        <field name="name">transitops.trip.revenue.pivot</field>
+        <field name="model">transitops.trip</field>
+        <field name="arch" type="xml">
+            <pivot string="Trip Revenue Analysis" sample="1">
+                <field name="vehicle_id" type="row"/>
+                <field name="status" type="col"/>
+                <field name="revenue" type="measure"/>
+                <field name="distance_km" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Dashboard: Maintenance Cost Pivot -->
+    <record id="maintenance_cost_pivot_view" model="ir.ui.view">
+        <field name="name">transitops.maintenance.cost.pivot</field>
+        <field name="model">transitops.maintenance</field>
+        <field name="arch" type="xml">
+            <pivot string="Maintenance Cost Analysis" sample="1">
+                <field name="vehicle_id" type="row"/>
+                <field name="maintenance_type" type="col"/>
+                <field name="cost" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Dashboard: Vehicle ROI Graph -->
+    <record id="vehicle_roi_graph_view" model="ir.ui.view">
+        <field name="name">transitops.vehicle.roi.graph</field>
+        <field name="model">transitops.vehicle</field>
+        <field name="arch" type="xml">
+            <graph string="Vehicle ROI" type="bar" sample="1">
+                <field name="name" type="col"/>
+                <field name="roi" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Dashboard Action -->
+    <record id="dashboard_action" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">transitops.vehicle</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="context">{'group_by': 'status'}</field>
+    </record>
+
+    <!-- Trip Analytics Action -->
+    <record id="trip_analytics_action" model="ir.actions.act_window">
+        <field name="name">Trip Analytics</field>
+        <field name="res_model">transitops.trip</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="context">{'group_by': 'vehicle_id'}</field>
+    </record>
+
+    <!-- Maintenance Analytics Action -->
+    <record id="maintenance_analytics_action" model="ir.actions.act_window">
+        <field name="name">Maintenance Analytics</field>
+        <field name="res_model">transitops.maintenance</field>
+        <field name="view_mode">pivot,graph</field>
+    </record>
+</odoo>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vehicle Search View -->
+    <record id="vehicle_search_view" model="ir.ui.view">
+        <field name="name">transitops.vehicle.search</field>
+        <field name="model">transitops.vehicle</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="vehicle_type"/>
+                <filter name="available" string="Available" domain="[('status', '=', 'available')]"/>
+                <filter name="on_trip" string="On Trip" domain="[('status', '=', 'on_trip')]"/>
+                <filter name="in_shop" string="In Shop" domain="[('status', '=', 'in_shop')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_type" string="Vehicle Type" context="{'group_by': 'vehicle_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Vehicle List View -->
+    <record id="vehicle_list_view" model="ir.ui.view">
+        <field name="name">transitops.vehicle.list</field>
+        <field name="model">transitops.vehicle</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="vehicle_type"/>
+                <field name="max_load_capacity"/>
+                <field name="status" widget="badge" decoration-success="status == 'available'" decoration-warning="status == 'on_trip'" decoration-danger="status == 'in_shop'" decoration-muted="status == 'retired'"/>
+                <field name="current_odometer"/>
+                <field name="acquisition_cost" sum="Total"/>
+                <field name="roi" widget="percent"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vehicle Form View -->
+    <record id="vehicle_form_view" model="ir.ui.view">
+        <field name="name">transitops.vehicle.form</field>
+        <field name="model">transitops.vehicle</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="available,on_trip,in_shop"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_trips" type="object" class="oe_stat_button" icon="fa-truck">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="trip_count"/></span>
+                                <span class="o_stat_text">Trips</span>
+                            </div>
+                        </button>
+                        <button name="action_view_maintenance" type="object" class="oe_stat_button" icon="fa-wrench">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="total_maintenance_cost" widget="monetary"/></span>
+                                <span class="o_stat_text">Maintenance</span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-money" type="object" readonly="1">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="total_revenue" widget="monetary"/></span>
+                                <span class="o_stat_text">Revenue</span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-line-chart" type="object" readonly="1">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="roi" widget="percent"/></span>
+                                <span class="o_stat_text">ROI</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="License Plate"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="model_name"/>
+                            <field name="vehicle_type"/>
+                            <field name="max_load_capacity"/>
+                            <field name="fuel_capacity"/>
+                        </group>
+                        <group>
+                            <field name="current_odometer"/>
+                            <field name="acquisition_cost"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Trips" name="trips">
+                            <field name="trip_ids"/>
+                        </page>
+                        <page string="Maintenance" name="maintenance">
+                            <field name="maintenance_ids"/>
+                        </page>
+                        <page string="Drivers" name="drivers">
+                            <field name="driver_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vehicle Kanban View -->
+    <record id="vehicle_kanban_view" model="ir.ui.view">
+        <field name="name">transitops.vehicle.kanban</field>
+        <field name="model">transitops.vehicle</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="status" sample="1">
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="vehicle_type"/>
+                <field name="status"/>
+                <field name="max_load_capacity"/>
+                <field name="acquisition_cost"/>
+                <field name="currency_id"/>
+                <field name="trip_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                            <div class="o_kanban_image_fill_left">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <field name="model_name"/>
+                                    <div>
+                                        <field name="vehicle_type"/>
+                                        <span> | </span>
+                                        <field name="max_load_capacity"/>
+                                        <span>t</span>
+                                    </div>
+                                    <div>
+                                        <strong>Trips: </strong>
+                                        <field name="trip_count"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="o_kanban_record_bottom_left">
+                                        <field name="status" widget="label_selection" options="{'classes': {'available': 'success', 'on_trip': 'warning', 'in_shop': 'danger', 'retired': 'muted'}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Vehicle Action -->
+    <record id="vehicle_action" model="ir.actions.act_window">
+        <field name="name">Vehicles</field>
+        <field name="res_model">transitops.vehicle</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="vehicle_search_view"/>
+        <field name="context">{'search_default_available': 0}</field>
+    </record>
+</odoo>

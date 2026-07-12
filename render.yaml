@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: transitops
+    runtime: docker
+    plan: free
+    healthCheckPath: /web/health
+    envVars:
+      - key: HOST
+        fromDatabase:
+          name: transitops-db
+          property: host
+      - key: USER
+        fromDatabase:
+          name: transitops-db
+          property: user
+      - key: PASSWORD
+        fromDatabase:
+          name: transitops-db
+          property: password
+      - key: ODOO_ADMIN_PASSWD
+        generateValue: true
+
+databases:
+  - name: transitops-db
+    plan: free

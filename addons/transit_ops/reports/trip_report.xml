@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Trip Report Action -->
+    <record id="action_trip_report" model="ir.actions.report">
+        <field name="name">Trip Report</field>
+        <field name="model">transitops.trip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">transit_ops.trip_report_template</field>
+        <field name="report_file">transit_ops.trip_report_template</field>
+        <field name="binding_model_id" ref="model_transitops_trip"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Trip Report QWeb Template -->
+    <template id="trip_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="trip">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Trip Report: <span t-field="trip.name"/></h2>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-6">
+                                <h3>Trip Details</h3>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Status:</strong></td>
+                                        <td><span t-field="trip.status"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Vehicle:</strong></td>
+                                        <td><span t-field="trip.vehicle_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Driver:</strong></td>
+                                        <td><span t-field="trip.driver_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Origin:</strong></td>
+                                        <td><span t-field="trip.origin"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Destination:</strong></td>
+                                        <td><span t-field="trip.destination"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <h3>Schedule</h3>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Departure:</strong></td>
+                                        <td><span t-field="trip.departure_date"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Arrival:</strong></td>
+                                        <td><span t-field="trip.arrival_date"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Distance:</strong></td>
+                                        <td><span t-field="trip.distance_km"/> km</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <h3>Cargo Information</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Description:</strong></td>
+                                <td><span t-field="trip.cargo_description"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weight:</strong></td>
+                                <td><span t-field="trip.cargo_weight"/> tonnes</td>
+                            </tr>
+                        </table>
+
+                        <h3>Financial Summary</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Fuel Consumed:</strong></td>
+                                <td><span t-field="trip.fuel_consumed"/> litres</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Revenue:</strong></td>
+                                <td><span t-field="trip.revenue"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

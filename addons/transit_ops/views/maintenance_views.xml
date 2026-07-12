@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Maintenance Search View -->
+    <record id="maintenance_search_view" model="ir.ui.view">
+        <field name="name">transitops.maintenance.search</field>
+        <field name="model">transitops.maintenance</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="maintenance_type"/>
+                <filter name="scheduled" string="Scheduled" domain="[('status', '=', 'scheduled')]"/>
+                <filter name="in_progress" string="In Progress" domain="[('status', '=', 'in_progress')]"/>
+                <filter name="completed" string="Completed" domain="[('status', '=', 'completed')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'maintenance_type'}"/>
+                    <filter name="group_vehicle" string="Vehicle" context="{'group_by': 'vehicle_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Maintenance List View -->
+    <record id="maintenance_list_view" model="ir.ui.view">
+        <field name="name">transitops.maintenance.list</field>
+        <field name="model">transitops.maintenance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="maintenance_type"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="cost" sum="Total"/>
+                <field name="status" widget="badge" decoration-info="status == 'scheduled'" decoration-warning="status == 'in_progress'" decoration-success="status == 'completed'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Maintenance Form View -->
+    <record id="maintenance_form_view" model="ir.ui.view">
+        <field name="name">transitops.maintenance.form</field>
+        <field name="model">transitops.maintenance</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start" type="object" string="Start Maintenance" class="oe_highlight" invisible="status != 'scheduled'"/>
+                    <button name="action_complete" type="object" string="Complete" class="oe_highlight" invisible="status != 'in_progress'"/>
+                    <field name="status" widget="statusbar" statusbar_visible="scheduled,in_progress,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="vehicle_id"/>
+                            <field name="maintenance_type"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="cost"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Maintenance Action -->
+    <record id="maintenance_action" model="ir.actions.act_window">
+        <field name="name">Maintenance</field>
+        <field name="res_model">transitops.maintenance</field>
+        <field name="view_mode">list,form,calendar</field>
+        <field name="search_view_id" ref="maintenance_search_view"/>
+    </record>
+</odoo>
