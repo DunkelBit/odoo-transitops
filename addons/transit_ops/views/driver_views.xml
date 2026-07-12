@@ -28,14 +28,14 @@
         <field name="name">transitops.driver.list</field>
         <field name="model">transitops.driver</field>
         <field name="arch" type="xml">
-            <list>
+            <tree>
                 <field name="name"/>
                 <field name="license_number"/>
                 <field name="license_expiry"/>
                 <field name="license_status" widget="badge" decoration-success="license_status == 'valid'" decoration-warning="license_status == 'expiring_soon'" decoration-danger="license_status == 'expired'"/>
                 <field name="phone"/>
                 <field name="status" widget="badge" decoration-success="status == 'available'" decoration-warning="status == 'on_trip'" decoration-muted="status == 'off_duty'"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -130,7 +130,7 @@
     <record id="driver_action" model="ir.actions.act_window">
         <field name="name">Drivers</field>
         <field name="res_model">transitops.driver</field>
-        <field name="view_mode">kanban,list,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" ref="driver_search_view"/>
     </record>
 </odoo>

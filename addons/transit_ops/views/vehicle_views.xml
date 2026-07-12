@@ -26,7 +26,7 @@
         <field name="name">transitops.vehicle.list</field>
         <field name="model">transitops.vehicle</field>
         <field name="arch" type="xml">
-            <list>
+            <tree>
                 <field name="name"/>
                 <field name="model_name"/>
                 <field name="vehicle_type"/>
@@ -35,7 +35,7 @@
                 <field name="current_odometer"/>
                 <field name="acquisition_cost" sum="Total"/>
                 <field name="roi" widget="percent"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -62,13 +62,13 @@
                                 <span class="o_stat_text">Maintenance</span>
                             </div>
                         </button>
-                        <button class="oe_stat_button" icon="fa-money" type="object" readonly="1">
+                        <button class="oe_stat_button" icon="fa-money">
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_value"><field name="total_revenue" widget="monetary"/></span>
                                 <span class="o_stat_text">Revenue</span>
                             </div>
                         </button>
-                        <button class="oe_stat_button" icon="fa-line-chart" type="object" readonly="1">
+                        <button class="oe_stat_button" icon="fa-line-chart">
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_value"><field name="roi" widget="percent"/></span>
                                 <span class="o_stat_text">ROI</span>
@@ -165,7 +165,7 @@
     <record id="vehicle_action" model="ir.actions.act_window">
         <field name="name">Vehicles</field>
         <field name="res_model">transitops.vehicle</field>
-        <field name="view_mode">kanban,list,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" ref="vehicle_search_view"/>
         <field name="context">{'search_default_available': 0}</field>
     </record>

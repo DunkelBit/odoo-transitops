@@ -34,7 +34,7 @@
         <field name="name">transitops.trip.list</field>
         <field name="model">transitops.trip</field>
         <field name="arch" type="xml">
-            <list>
+            <tree>
                 <field name="name"/>
                 <field name="vehicle_id"/>
                 <field name="driver_id"/>
@@ -45,7 +45,7 @@
                 <field name="cargo_weight"/>
                 <field name="status" widget="badge" decoration-success="status == 'completed'" decoration-info="status == 'draft'" decoration-warning="status in ('dispatched', 'in_transit')" decoration-danger="status == 'cancelled'"/>
                 <field name="revenue" sum="Total"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -84,7 +84,7 @@
                             <field name="fuel_consumed"/>
                         </group>
                     </group>
-                    <group string="Cargo & Financials">
+                    <group string="Cargo &amp; Financials">
                         <group>
                             <field name="cargo_description"/>
                             <field name="cargo_weight"/>
@@ -161,7 +161,7 @@
     <record id="trip_action" model="ir.actions.act_window">
         <field name="name">Trips</field>
         <field name="res_model">transitops.trip</field>
-        <field name="view_mode">kanban,list,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="search_view_id" ref="trip_search_view"/>
     </record>
 </odoo>

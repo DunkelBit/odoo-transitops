@@ -27,7 +27,7 @@
         <field name="name">transitops.maintenance.list</field>
         <field name="model">transitops.maintenance</field>
         <field name="arch" type="xml">
-            <list>
+            <tree>
                 <field name="name"/>
                 <field name="vehicle_id"/>
                 <field name="maintenance_type"/>
@@ -35,7 +35,7 @@
                 <field name="date_end"/>
                 <field name="cost" sum="Total"/>
                 <field name="status" widget="badge" decoration-info="status == 'scheduled'" decoration-warning="status == 'in_progress'" decoration-success="status == 'completed'"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -82,7 +82,7 @@
     <record id="maintenance_action" model="ir.actions.act_window">
         <field name="name">Maintenance</field>
         <field name="res_model">transitops.maintenance</field>
-        <field name="view_mode">list,form,calendar</field>
+        <field name="view_mode">tree,form,calendar</field>
         <field name="search_view_id" ref="maintenance_search_view"/>
     </record>
 </odoo>
